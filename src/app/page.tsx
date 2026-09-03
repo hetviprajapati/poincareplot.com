@@ -1,4 +1,5 @@
 import './page.css';
+import { JsonLd } from '@/components/shared/JsonLd/JsonLd';
 
 const faqs = [
   {
@@ -23,41 +24,60 @@ const faqs = [
   },
 ];
 
-const faqSchema = {
+const jsonLd = {
   '@context': 'https://schema.org',
-  '@type': 'FAQPage',
-  mainEntity: [
+
+  '@graph': [
     {
-      '@type': 'Question',
-      name: 'What is a Poincaré plot in HRV analysis?',
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: 'A Poincaré plot graphs each RR interval against the very next one (RRi on the x-axis, RRi+1 on the y-axis). Instead of a single number like RMSSD, it produces a scatter of points whose shape reveals both short-term and long-term heart rate variability at a glance.',
-      },
+      '@type': 'WebSite',
+
+      '@id': 'https://poincareplot.com/#website',
+
+      name: 'PoincaréPlot.com',
+
+      url: 'https://poincareplot.com/',
+
+      description: 'A reference resource covering Poincaré plots, SD1, SD2, RR intervals, and heart rate variability analysis.',
     },
+
     {
-      '@type': 'Question',
-      name: 'What do SD1 and SD2 mean?',
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: 'SD1 is the width of the point cloud, reflecting short-term, beat-to-beat variability and correlating closely with RMSSD. SD2 is the length of the cloud, reflecting longer-term variability across the recording. A wide, open cloud generally reflects greater parasympathetic activity; a narrow, tight cloud generally reflects sympathetic dominance or stress.',
+      '@type': 'WebPage',
+
+      '@id': 'https://poincareplot.com/#webpage',
+
+      name: 'Poincaré Plot | HRV, SD1, SD2 & RR Interval Analysis',
+
+      url: 'https://poincareplot.com/',
+
+      description:
+        'A reference covering the history, mathematics, formulas, and interpretation of Poincaré plots in heart rate variability analysis.',
+
+      isPartOf: {
+        '@id': 'https://poincareplot.com/#website',
       },
-    },
-    {
-      '@type': 'Question',
-      name: 'Who invented the Poincaré plot?',
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: 'The underlying mathematical technique, the Poincaré map or return map, was developed by French mathematician Henri Poincaré in the late 19th century to study periodic orbits in dynamical systems. Its application to heart rate data came roughly a century later, most commonly credited to Woo and colleagues in the early 1990s.',
-      },
-    },
-    {
-      '@type': 'Question',
-      name: 'Is a Poincaré plot better than RMSSD?',
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: "They're mathematically related rather than competing — SD1 is derived from the same successive-difference data as RMSSD and the two correlate closely. The Poincaré plot's advantage is visual and nonlinear: it can reveal patterns, like arrhythmia clusters or irregular shapes, that a single summary number cannot show.",
-      },
+
+      about: [
+        {
+          '@type': 'Thing',
+          name: 'Poincaré Plot',
+        },
+        {
+          '@type': 'Thing',
+          name: 'Heart Rate Variability',
+        },
+        {
+          '@type': 'Thing',
+          name: 'SD1',
+        },
+        {
+          '@type': 'Thing',
+          name: 'SD2',
+        },
+        {
+          '@type': 'Thing',
+          name: 'RR Intervals',
+        },
+      ],
     },
   ],
 };
@@ -65,12 +85,7 @@ const faqSchema = {
 export default function PoincarePlotPage() {
   return (
     <main className="poincare-reference-page">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(faqSchema),
-        }}
-      />
+      <JsonLd data={jsonLd} />
 
       <div className="poincare-wrap">
         <header className="poincare-site-header">

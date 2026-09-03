@@ -1,7 +1,8 @@
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
-import './globals.css';
 import { GoogleAnalytics } from '@next/third-parties/google';
+
+import './globals.css';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -16,38 +17,15 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL('https://poincareplot.com'),
 
-  title: {
-    default: 'Poincaré Plot | HRV, SD1, SD2 & RR Interval Analysis',
-    template: '%s | PoincaréPlot.com',
-  },
+  applicationName: 'PoincaréPlot.com',
+
+  title: 'Poincaré Plot | HRV, SD1, SD2 & RR Interval Analysis',
 
   description:
     'Learn about Poincaré plots, RR interval analysis, SD1, SD2, and heart rate variability. Explore the history, mathematics, and physiological interpretation of the Poincaré plot.',
 
-  applicationName: 'PoincaréPlot.com',
-
-  keywords: [
-    'Poincaré plot',
-    'Poincare plot',
-    'Poincaré analysis',
-    'Poincare analysis',
-    'Poincaré plot HRV',
-    'Poincare plot HRV',
-    'Poincaré plot SD1 SD2',
-    'SD1',
-    'SD2',
-    'RR interval',
-    'RR interval analysis',
-    'heart rate variability',
-    'HRV',
-    'Poincaré plot interpretation',
-    'Poincaré plot explained',
-    'Poincaré plot mathematics',
-    'Poincaré plot history',
-  ],
-
   alternates: {
-    canonical: 'https://poincareplot.com/',
+    canonical: '/',
   },
 
   openGraph: {
@@ -56,7 +34,7 @@ export const metadata: Metadata = {
     description:
       'A reference on Poincaré plots, their mathematics, history, and use in heart rate variability analysis, including SD1, SD2, and RR intervals.',
 
-    url: 'https://poincareplot.com/',
+    url: '/',
 
     siteName: 'PoincaréPlot.com',
 
@@ -74,14 +52,27 @@ export const metadata: Metadata = {
   robots: {
     index: true,
     follow: true,
+
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+      'max-video-preview': -1,
+    },
   },
 };
 
-export default function RootLayout({ children }: LayoutProps<'/'>) {
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
       <body>{children}</body>
-      <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID!} />
+
+      {process.env.NEXT_PUBLIC_GA_ID ? <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} /> : null}
     </html>
   );
 }
